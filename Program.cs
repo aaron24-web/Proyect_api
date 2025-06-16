@@ -1,5 +1,5 @@
 
-// Program.cs
+// Programa principal
 
 using JaveragesLibrary.Services.Features.Mangas;
 using JaveragesLibrary.Infrastructure.Repositories;
