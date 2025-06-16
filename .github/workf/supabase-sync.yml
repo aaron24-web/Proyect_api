@@ -1,0 +1,22 @@
+name: Supabase Sync
+on:
+  repository_dispatch:  # Se activa por webhooks
+    types: [supabase_change]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Procesar cambios
+        env:
+          TABLE: ${{ github.event.client_payload.table }}
+          DATA: ${{ toJson(github.event.client_payload.data) }}
+        run: |
+          echo "$DATA" > "changes_$(date +%s).json"
+          git config --global user.name "Supabase Bot"
+          git config --global user.email "bot@example.com"
+          git add .
+          git commit -m "[Supabase] ${TABLE}: Actualización"
+          git push
